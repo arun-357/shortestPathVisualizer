@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { Volume2, VolumeX } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
 import Controls from './components/Controls';
 import Grid from './components/Grid';
 import AlgorithmInfo from './components/Information';
@@ -26,6 +27,8 @@ const App = () => {
   const [obstacleMode, setObstacleMode] = useState(false);
   const [path, setPath] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(true);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -43,6 +46,34 @@ const App = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    const handleUserInteraction = () => {
+      if (audioRef.current) {
+        audioRef.current.muted = false;
+        audioRef.current.play().catch(err => console.log('Audio play error:', err));
+        setIsMusicPlaying(true);
+      }
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('keydown', handleUserInteraction);
+    };
+
+    document.addEventListener('click', handleUserInteraction);
+    document.addEventListener('keydown', handleUserInteraction);
+
+    return () => {
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('keydown', handleUserInteraction);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isMusicPlaying && audioRef.current) {
+      audioRef.current.play().catch(err => console.log('Audio play error:', err));
+    } else if (audioRef.current) {
+      audioRef.current.pause();
+    }
+  }, [isMusicPlaying]);
 
   const handleMouseDown = (r, c) => {
     setIsDragging(true);
@@ -111,6 +142,10 @@ const App = () => {
     setPath(result);
   };
 
+  const toggleMusic = () => {
+    setIsMusicPlaying(prev => !prev);
+  };
+
   return (
     <div className='min-h-screen bg-gray-900 flex flex-col items-center p-4 relative overflow-hidden'>
       <StarsBackground
@@ -120,6 +155,13 @@ const App = () => {
         minTwinkleSpeed={1}
       />
       <ShootingStars starWidth={20} starHeight={2} />
+      <audio ref={audioRef} src='/space.mp3' loop autoPlay />
+      <button
+        onClick={toggleMusic}
+        className='fixed top-4 right-4 z-20 p-2 rounded-full bg-gray-800/50 backdrop-blur-sm border border-gray-700/30 shadow-lg text-white hover:bg-gray-700/50 transition-all duration-300'
+      >
+        {isMusicPlaying ? <Volume2 className='w-6 h-6' /> : <VolumeX className='w-6 h-6' />}
+      </button>
       <div className='relative z-10 w-full max-w-7xl'>
         <h1 className='text-3xl font-bold text-white mb-6 text-center'>Shortest Path Visualizer</h1>
         <div className='flex flex-col items-center gap-4'>
