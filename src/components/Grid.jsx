@@ -33,8 +33,12 @@ const Grid = ({ grid, handleMouseDown, handleMouseEnter, handleMouseUp }) => {
                 borderRadius: '4px',
               }}
             >
-              {cell === 2 && <img src='/start.png' alt='Start' className='w-8 h-8' />}
-              {cell === 1 && <img src='/end.png' alt='End' className='w-8 h-8' />}
+              {cell === 2 && (
+                <img src='/start.png' alt='Start' className='w-8 h-8 sm:w-6 sm:h-6 xs:w-4 xs:h-4' />
+              )}
+              {cell === 1 && (
+                <img src='/end.png' alt='End' className='w-8 h-8 sm:w-6 sm:h-6 xs:w-5 xs:h-5' />
+              )}
             </div>
           ))}
         </div>
