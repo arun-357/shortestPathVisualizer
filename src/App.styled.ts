@@ -8,6 +8,7 @@ export const AppRoot = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background: ${({ theme }) => theme.bg};
   color: ${({ theme }) => theme.text};
@@ -52,6 +53,7 @@ export const CenterStage = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 0;
   position: relative;
 `;
 

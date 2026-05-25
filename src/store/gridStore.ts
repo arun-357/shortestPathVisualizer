@@ -1,8 +1,9 @@
 import { create } from 'zustand';
 import type { AlgorithmStep, CellData, CellState, GridState } from '../algorithms/types';
 
-const DEFAULT_ROWS = 20;
-const DEFAULT_COLS = 32;
+const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+const DEFAULT_ROWS = isMobile ? 13 : 20;
+const DEFAULT_COLS = isMobile ? 20 : 32;
 
 function makeCell(row: number, col: number): CellData {
   return { row, col, state: 'unvisited', weight: 1, gScore: Infinity, hScore: 0, fScore: Infinity, parent: null };
@@ -84,8 +85,8 @@ interface GridStore {
 }
 
 export const useGridStore = create<GridStore>((set, get) => {
-  const defaultStart: [number, number] = [10, 4];
-  const defaultEnd: [number, number] = [10, 27];
+  const defaultStart: [number, number] = [Math.floor(DEFAULT_ROWS / 2), Math.floor(DEFAULT_COLS * 0.15)];
+  const defaultEnd: [number, number]   = [Math.floor(DEFAULT_ROWS / 2), Math.floor(DEFAULT_COLS * 0.85)];
   const initBase = makeGrid(DEFAULT_ROWS, DEFAULT_COLS, defaultStart, defaultEnd);
 
   return {

@@ -25,6 +25,16 @@ export const NavBarLeft = styled.div`
   align-items: center;
   gap: 14px;
   min-width: 0;
+
+  ${mobile} {
+    overflow: hidden;
+  }
+`;
+
+export const NavHeuristicWrapper = styled.div`
+  ${mobile} {
+    display: none;
+  }
 `;
 
 export const NavBarRight = styled.div`

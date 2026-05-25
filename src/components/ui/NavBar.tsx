@@ -19,6 +19,7 @@ import {
   NavBarLeft,
   NavBarRight,
   NavBarRoot,
+  NavHeuristicWrapper,
   NavIconBtn,
   SelectChevron,
   SelectGroup,
@@ -82,7 +83,11 @@ export const NavBar: React.FC = () => {
         <VerticalDivider />
         <SelectGroup>
           <AlgoSelect value={selectedAlgo} onChange={setAlgo} />
-          {needsHeuristic && <HeuristicSelect value={heuristic} onChange={setHeuristic} />}
+          {needsHeuristic && (
+            <NavHeuristicWrapper>
+              <HeuristicSelect value={heuristic} onChange={setHeuristic} />
+            </NavHeuristicWrapper>
+          )}
         </SelectGroup>
       </NavBarLeft>
 

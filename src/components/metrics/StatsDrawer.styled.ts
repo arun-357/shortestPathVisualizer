@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { FONT_MONO, FONT_SANS } from '../../styles/theme';
+import { mobile } from '../../styles/breakpoints';
 
 // ─── BigStat ─────────────────────────────────────────────────────────────────
 
@@ -31,6 +32,10 @@ export const BigStatValue = styled.span<{ $accent?: string }>`
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: ${({ $accent, theme }) => $accent || theme.text};
+
+  ${mobile} {
+    font-size: 15px;
+  }
 `;
 
 export const BigStatUnit = styled.span`
@@ -104,6 +109,14 @@ export const DrawerRoot = styled.div`
   font-family: ${FONT_SANS};
   animation: slide-up 0.25s ease-out;
   z-index: 10;
+
+  ${mobile} {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    max-height: 62dvh;
+    overflow-y: auto;
+  }
 `;
 
 export const DrawerHeader = styled.div`
@@ -138,6 +151,12 @@ export const DrawerBody = styled.div`
   display: grid;
   grid-template-columns: 1.1fr 1.5fr 1fr;
   gap: 20px;
+
+  ${mobile} {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 12px;
+  }
 `;
 
 export const DrawerColLabel = styled.div`
